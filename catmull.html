@@ -5,13 +5,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Amogh Hiremath: Homepage</title>
+  <title>Catmull-Clark Subdivision Surface Algorithm</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link
@@ -92,13 +91,34 @@
   <!-- Page Content -->
   <div class="container mt-3 mb-5">
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-8">
         <h2>Catmull-Clark Subdivision Surface Algorithm</h2>
-        <p>Posted on April 11, 2024</p>
+        <p id="lastEdited">Last edited: </p> <!-- Empty element to be filled by JavaScript -->
         <p class="indented">Hello,</p>
         <p class="indented">In this blog post, I will explain the Catmull-Clark subdivision surface algorithm and my experiences in the implementation of this algorithm. Firstly, I implemented this algorithm for my CENG469: Computer Graphics 2 class as a first homework. The Catmull-Clark algorithm is a technique used in computer graphics to create smooth surfaces by subdividing a mesh. The algorithm was developed by Edwin Catmull and Jim Clark in 1978. It is commonly used in 3D modeling software to create smooth surfaces from a coarse mesh.</p>
-        <p class="indented">First of all, I started my implementation by reading paper, wikipedia page of the algorithm and looking the sample opengl code provided in course page. In the sample opengl, parser is just work for faces with three faces. I upgraded for work both quads and triangles. In my design of algorithm, I first coded my algorithm only for quads. </p>
-    
+        <p class="indented">First of all, I started my implementation by reading paper, wikipedia page of the algorithm and looking the sample opengl code provided in course page. In the sample opengl, parser is just work for faces with three faces. I upgraded for work both quads and triangles. In my design of algorithm, I first coded my algorithm only for quads. After the upgrade the parser accordingly, for drawing face, I will first use by calling drawElements by sending GL_QUADS as a parameter. However, GL_QUADS is depreciated in the latest opengl version. Because of that, I will send it to the buffer as a triangles and call drawElements by sending GL_TRIANGLES.</p>
+        <img style="margin-bottom: 10px;" src="assets/img/box1.png">
+        <p class="indented">As shown in figure above, it will simply shows us 1x1x1 cube as a result. After the first visual output, I started to implementation of the catmull-clark subdivision algorithm. In this implementation, I iterate all faces and in the iteration I found the face point which is the middle point of the current face as a one vertex of the new object. As a 2 new vertex, I find mid point of the edges and take the average of the new face points of these new points which uses these edges. And new vertex point as shown in paper I calculate as (F+2R+(n-3)P)/n. To not calculate these new vertices again and again I used unordered map and firstly check that in this map to calculate this new vertex before. </p>
+        <img style="margin-bottom: 10px;" src="assets/img/box2.png">
+        <p class="indented">In that figure, it's be seen that 1st level of catmull clark algorithm. I checked these new vertices in blender to all vertices is correct according to the original algorithm. </p>
+        <img style="margin-bottom: 10px;" src="assets/img/box3.png">
+        <p class="indented">This is the second level of the algorithm. The upper level of algorithms makes this box circler at each level.</p>
+        <p class="indented">For the triangle faces, I applied the same structure but it is for 3 vertices. However, after the first applied level, all faces becomes quads again and it is applied same as quads.</p>
+        <img style="margin-bottom: 10px;" src="assets/img/objects1.png">
+        <img style="margin-bottom: 10px;" src="assets/img/objects2.png">
+        <p class="indented">It works for both objects and all the levels became correct according to the paper.</p>
+        <img style="margin-bottom: 10px;" src="assets/img/objects4.png">
+        <p class="indented">In this figure, it is shown that the 3rd level of the algorithm. It is seen that the object is more circular than the previous levels.</p>
+        <p class="indented">In this process, I calculate normals wrong initially. Because of that the color of my objects was not correct. It takes my time to find out what is the problem. I also faced with a problem in buffer offset length. Initially I calculate it wrong also. Because of that only my first object seen correctly and other object vertices goes different wrong places. Apart from these two problems, I did not face with any problem.</p>
+        <p class="indented">For the level 5 and 6 it takes time to calculate the new vertices but after the calculation, it takes no time to go and model these levels since it stores the calculated levels in the arrays. In the previous levels there is no problems for the calculation speed.</p>
+        <img style="margin-bottom: 10px;" src="assets/img/line1.png">
+        <img style="margin-bottom: 10px;" src="assets/img/line2.png">
+        <img style="margin-bottom: 10px;" src="assets/img/line3.png">
+        <p class="indented">In the figures above, it is other modes you can see all faces clearly.</p>
+        <p class="indented">In conclusion, I implemented the Catmull-Clark subdivision surface algorithm for my CENG469: Computer Graphics 2 class as a first homework. I faced with some problems in the implementation of the algorithm but I solved them. I am happy with the result of my implementation.</p>
+
+
+
       </div>
     </div>
     <!-- /.row -->
@@ -131,6 +151,16 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    // Get the last modified date of the document
+    var lastModified = new Date(document.lastModified);
+    // Format the date as desired (example format: Month Day, Year Hour:Minute)
+    var formattedDate = lastModified.toLocaleString('en-US', { timeZone: 'Europe/Istanbul' });
+    // Update the content of the element with id "lastEdited"
+    document.getElementById('lastEdited').innerHTML += formattedDate;
+</script>
+
 
 </body>
 
