@@ -99,11 +99,11 @@
       <p class="indented">In this blog post, I will also compare ray tracer performance by brute force implementation and BVH accelaretion version. In the next part of the ray tracer, I will impreve my accelaretion structure to improve the speed.</p>
       <h3>Brute Force Implementation</h3>
       <p class="indented">In the first part of the ray tracer implementation, I used a brute force algorithm. In this implementation, I check each object in the scene for each ray. This approach is not efficient and not suitable for complex scenes. In the following, I will explain the steps of the algorithm.</p>
-      <p class="indented">For each pixel in the image, I calculate the ray direction by using the camera position and the pixel position. Then, I find the closest intersection point of the ray and the scene objects. </p>
+      <p class="indented">For each pixel in the image, I calculate the ray direction by using the camera position and the pixel position. Then, I find the closest intersection point of the ray and the scene objects. I add multithread solution after doing this. I run my application with 4 thread and give them each ray to another thread back to back. I will improve this method in the next parts, by making improvement to increase caching. I believe that it will make faster.</p>
       <p class="indented"></p>
       <h3>BVH Accelaretion</h3>
       <p class="indented">In the second part of the ray tracer implementation, I used a BVH accelaretion structure. BVH is a binary tree structure that divides the scene objects into two groups. This structure is used to reduce the number of intersection tests. In the following, I will explain the steps of the algorithm.</p>
-      <p class="indented">I build the BVH tree by using the scene objects. I divide the scene objects into two groups by using the changing the axis of the bounding box. Then, I create a new node for each group. I continue this process until I reach the leaf node. </p>
+      <p class="indented">I build the BVH tree by using the scene objects. I divide the scene objects into two groups by using the changing the axis of the bounding box. Then, I create a new node for each group. I continue this process until I reach the leaf node. For nodes, I find minimum and maximum points of each group of the elements. It will make algorithms' finding the intersection part logaritmic.</p>
       <h3>Results</h3>
       <p class="indented">I tested the ray tracer with different scenes. I compared the performance of the brute force implementation and the BVH accelaretion version. The BVH accelaretion version is faster than the brute force implementation. The BVH accelaretion version is more suitable for complex scenes. </p>
       <img style="margin-bottom: 10px;" src="./assets/img/RayTracing1/berserker_smooth.png">
@@ -116,7 +116,7 @@
       <img style="margin-bottom: 10px;" src="assets/img/RayTracing1/simple.png">
       <img style="margin-bottom: 10px;" src="assets/img/RayTracing1/cornellbox.png">
       
-      <p class="indented">It works with at most 3 seconds for these scenes.</p>
+      <p class="indented">It works with at most 3 seconds for these scenes. Many of them is under 1 seconds. Before the BVH it will work in a few minutes etc.</p>
       
       <h3>Problems</h3>
       <p class="indented">I got some problems on conductor & dielectric materials</p>
