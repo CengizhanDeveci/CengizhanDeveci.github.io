@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Ray Tracer</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: iPortfolio - v1.5.1
+  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    /* Add your custom styles here */
+    /* For demonstration purposes, minimal custom styling is provided */
+    .blog-post {
+      margin-bottom: 50px;
+    }
+    .blog-post .post-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .blog-post .post-meta {
+      color: #999;
+    }
+    .blog-post .post-content {
+      margin-top: 20px;
+    }
+
+    .indented {
+      text-indent: 40px; /* Adjust this value according to your preference */
+    }
+  </style>
+</head>
+
+<body>
+
+</body>
+
+
+  </main><!-- End #main -->
+
+   <!-- Navigation -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="./index.html">Cengizhan Deveci's Blog Page</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+ <!-- Page Content -->
+ <div class="container mt-3 mb-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <h2>Ray Tracing</h2>
+      <p id="lastEdited">Last edited: </p> <!-- Empty element to be filled by JavaScript -->
+      <p class="indented">Hello,</p>
+      <p class="indented">In this blog post, I will talk about what did i do in the next 2 weeks for my ray tracer. Second homework subject was adding acceleration structures, geometric transformations and instancing to ray tracer.</p>
+      <p class="indented">Firstly, I had some problems from the first part of ray tracer. I could not render dielectrics and conductor at all. I fixed that issue, so I started to get results. </p>
+      <p class="indented"></p>
+      <p class="indented">Secondly, I had some BVH acceleration structures in my raytracer but I want to optimize it more. In the previous version of raytracer -without the BVH-, rays was checking all objects and check whether they are intersecting or not; but in this version BVH structure create a bounding box by getting min and max point for x, y and z coordinates of all objects. In the creation of bounding box, firstly I sorted all objects according their one of the axis. I choose its axis like x, y, z, x and goes. Instead of choosing only one of the axis I get very big time improvement. After doing this I create a tree structure from the parent to leaf I started to checking is it intersecting with the box or not. If the intersection occurs on the parent node, the ray tracer checks both child whether the intersection occurs. If not it returns. 
+        In the building section of bvh tree, I added spheres and faces -which is a triangle with 3 vertices- for the triangles and meshes. To not lose the meshes information I add these face class to material infos etc. Before the next assignment I am planning to change these structures to more proper structures since it uses more memory than before, so I believe that this changes will make my ray tracer more optimize and faster.</p>
+      <p class="indented">For shadows and computing the color when they are intersection points, it is works as before. In the shadows, it will send rays to the point lights and check the objects between the intersection and point lights find is it shadow or not from the bvh tree created in the beginning. </p>
+      <p class="indented">There are some rendering times:</p>
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/cornellbox.png" class="img-fluid" alt="It takes 0.33s">
+      <p class="indented">It takes 0.33s</p>
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/bunny.png" class="img-fluid" alt="It takes 0.12s">
+      <p class="indented">It takes 0.12s</p>
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/scienceTree.png" class="img-fluid" alt="It takes 0.66s">
+      <p class="indented">It takes 0.66s</p>
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/berserker_smooth.png" class="img-fluid" alt="It takes 0.48s">
+      <p class="indented">It takes 0.48s</p>
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/low_poly_scene_smooth.png" class="img-fluid" alt="It takes 1.01s">
+      <p class="indented">It takes 1.01s</p>
+      <p class="indented">I get these results my laptop which has i5 9300h and works with 4 thread.</p>
+
+      <p class="indented">Thirdly, I tried to implement transformations. After the parsing part, I create 4x4 transformation matrices and store them in the scene class. While creating the BVH tree, I create a new objects and multiply with the transformation matrices when I initialize the BVH tree structure. After that according to that new objects and faces, I build a BVH tree but unfortunately, I could not get good results. There are some results I get:</p>
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/simple_transform.png" class="img-fluid" alt="">
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/ellipsoids.png" class="img-fluid" alt="">
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/spheres.png" class="img-fluid" alt="">
+      <h3>Problems</h3>
+      <p class="indented">Transformations and instancing was a very crucial parts of this assignment but I could not add it correctly due to lack of time since I had very important personal issues and work. Because of that I could not find enough time for debugging for transformations. In the next assignment, I will start before so that I can add this transformations and instancing correctly to continue properly.</p>
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/simple_transform.png" class="img-fluid" alt="">
+
+      <img style="margin-bottom: 5px;" src="assets/img/RayTracing2/ellipsoids.png" class="img-fluid" alt="">
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-4 bg-dark">
+    <div class="container text-white text-center">
+      <p>Copyright © 2024 My Blog</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Get the last modified date of the document
+    var lastModified = new Date(document.lastModified);
+    // Format the date as desired (example format: Month Day, Year Hour:Minute)
+    var formattedDate = lastModified.toLocaleString('en-US', { timeZone: 'Europe/Istanbul' });
+    // Update the content of the element with id "lastEdited"
+    document.getElementById('lastEdited').innerHTML += formattedDate;
+</script>
+
+
+</body>
+
+</html>
